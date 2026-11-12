@@ -1,17 +1,17 @@
 # Probability Earth
 
-A map-first geopolitical prediction-market terminal built with Next.js, TypeScript, Tailwind, MapLibre, Recharts, and a persistent Node.js market-data service.
+A live geopolitical prediction-market terminal: Next.js, TypeScript, Tailwind, MapLibre, Recharts, and Node-managed Polymarket WebSocket connections.
 
-## Run locally
+## Local development
 
-Requires Node.js 22.12+ and npm.
+Node 22.12+ and npm:
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
 
-Open http://localhost:3000. The persistent data service binds to 127.0.0.1:4001. Next proxies `/api/earth/*` to it; no browser CORS workaround, API keys, wallet, or authentication required. Both processes stop together with Ctrl+C.
+Open http://localhost:3000. No wallet, trading credentials, database, or API key required.
 
 ```sh
 npm test
@@ -20,70 +20,56 @@ npm run build
 npm start
 ```
 
-Production builds use Next's webpack compiler for compatibility with restricted environments. Deploy both processes on a persistent Node host or container. The data service cannot be replaced by a short-lived serverless invocation. Put the frontend behind your normal HTTPS reverse proxy; the backend is loopback-only. No hosted deployment is included.
+## Vercel deployment
 
-## Features
+Import `zairalaraib/probabilityearth` into Vercel as a Next.js project. The frontend and native `/api/earth/*` route handlers deploy together. No loopback backend URL or environment variables are needed. `vercel.json` uses the `iad1` region and the tested webpack build.
 
-- Locally bundled country boundaries; zoom, pan, hover, country selection, fullscreen, and reset
-- Activity and 24-hour movement choropleths with category and country filtering
-- Country market panels with actual outcome labels, volume, liquidity, expiry, source timestamps, and Polymarket links
-- Search, top movers, most active contracts, ≥5pp daily movement count, persistent browser watchlist
-- Historical outcome charts with selectable timeframes
-- Server-owned WebSocket subscriptions, dynamic reconciliation, 10-second PING/PONG heartbeat, stale connection detection, and exponential reconnect
-- One-second SSE snapshots, retained prices across disconnects, bounded live movement feed
-- Gamma discovery scans all active-event pages with limit/offset, deduplication, five-minute refresh, and visible discovery completeness
+**Runtime model:** live server-side upstream connections run while clients maintain an HTTP event stream. Vercel Functions are time-limited, so the stream closes gracefully after four minutes; EventSource reconnects automatically. Warm instances reuse discovered state, but instances are not durable. Discovery restarts on cold instances and refreshes every five minutes during use. Failed discovery retries after 30 seconds. Last-known prices stay in the browser during reconnection.
 
-## Data integrity and interpretation
+This hosted mode replaces the original always-on Node architecture with request-scoped streaming. It provides live updates while the app is open, not a permanent background collector. It stores no durable tick history; historical charts query Polymarket directly. The standalone backend (`npm run start:backend`, `Dockerfile.backend`) remains available for a true persistent-server deployment.
 
-Public sources:
+## GitHub Pages option
+
+`.github/workflows/pages.yml` can deploy a static frontend backed by the Vercel API:
+
+1. Enable Pages with GitHub Actions as its source.
+2. Set the repository Actions variable `DATA_SERVICE_URL` to `https://YOUR-VERCEL-DOMAIN/api/earth`.
+3. Run the workflow. It requires a real LIVE stream with market prices before publishing. No localhost or placeholder backend is substituted.
+
+The workflow configures the repository path automatically. `build:pages` temporarily excludes server-only route handlers during static export and restores them afterward. For a local export check:
+
+```sh
+GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/probabilityearth NEXT_PUBLIC_DATA_SERVICE_URL=https://YOUR-VERCEL-DOMAIN/api/earth npm run build:pages
+```
+
+These NEXT_PUBLIC values are public URL configuration, never credentials. GitHub Pages cannot run the backend itself.
+
+## Features and interpretation
+
+- Locally bundled country boundaries, hover, click, zoom, reset, fullscreen
+- Activity, 24-hour movement, and category map modes
+- Every matching country market in a scrollable sidebar
+- Search, category and country filters, rising/falling movers, volume rankings
+- Browser-saved watchlist, real historical charts, one-second live-update batches
+- Distinct Gamma outcome, executed trade, and bid/ask midpoint source labels
+- Visible LIVE, RECONNECTING, STALE, discovery completeness, and errors
+- Midnight blue and white interface with sky blue, neon pink, and orange accents
+
+Gamma discovery paginates through all active events, deduplicates by market ID, and excludes closed/invalid markets. Outcome labels, IDs, and prices retain their positional relationship; multi-outcome and position-ID objects are supported. Missing prices remain unavailable. Rule-based classification uses event title, market question, and tags; explicit country names and listed political aliases define associations. Description-only matches, unassociated corporate leadership contracts, and obvious sports contracts are excluded. Rules are conservative, incomplete, and not a curated intelligence feed.
+
+A market may belong to several countries; country aggregates can overlap. The map never represents a geopolitical risk score. Moves are percentage-point differences, not percent growth. Source-provided changes are shown only when their outcome interpretation is supported. A healthy heartbeat indicates transport health; each outcome timestamp indicates price freshness. No synthetic live updates or fabricated markets are served.
+
+## Sources
 
 - https://gamma-api.polymarket.com/events
 - https://clob.polymarket.com/prices-history
 - wss://ws-subscriptions-clob.polymarket.com/ws/market
 - https://docs.polymarket.com/market-data/realtime-data
-- https://docs.polymarket.com/market-data/discover-markets
 
-Gamma arrays are parsed positionally: labels, outcome prices, and token IDs remain aligned. A YES outcome is only labeled YES if the source says so. Multi-outcome contracts retain every outcome. Object-shaped outcomes also support position identifiers when supplied. Missing or invalid probabilities remain unavailable.
+Some local network requests initially returned ECONNRESET; connection errors are surfaced instead of replacing real data. Verify the deployed stream and history separately on the destination network.
 
-Executed trade events use the actual trade price. `price_change` and `best_bid_ask` only update the displayed midpoint when both valid best quotes exist; raw order prices are never mistaken for trades. Source labels distinguish Gamma outcome prices, executed trades, and midpoint estimates. A healthy heartbeat means the transport is live; the individual outcome timestamp indicates price freshness. There are no fabricated markets or artificial updates.
+Country geometry is simplified from datasets/geo-countries, using Natural Earth public-domain data. Boundaries are not a statement on sovereignty.
 
-Country attribution is deliberately conservative and incomplete: explicit country names, adjectival forms, and listed political entities/leaders in event titles and market questions. Rules live in `lib/countries.ts`; a market can match several countries. Descriptions are excluded from attribution to reduce incidental references. Ambiguous terms such as Georgia are not mapped without a specific alias. Countries outside the dictionary can still be selected on the map and show no data. Unassigned geopolitical contracts remain in global lists.
+## Code
 
-Categories use ordered, transparent expressions over question, event title, tags, and description; see `lib/normalize.ts`. This heuristic is not a curated intelligence feed and may misclassify ambiguous contracts.
-
-One-hour and daily changes come from Gamma's outcome-price change fields only when YES is the first outcome, avoiding an unsupported outcome assumption. Values are displayed in percentage points, not percentage growth. Historical charts use actual CLOB history and display unavailable states when insufficient. Volume and liquidity are source-reported contract metrics. Country aggregates can overlap because one contract may belong to several countries; global totals deduplicate by market ID.
-
-The map displays market activity or largest absolute daily probability movement, never geopolitical risk. Market prices are not verified real-world probabilities. Countries without usable observations show no data.
-
-## Network and verification limitations
-
-During implementation on November 12, 2026, this environment reset direct connections to Gamma (`ECONNRESET`). The application correctly displays STALE and a discovery error instead of mock data. Live upstream probabilities and historical responses could therefore not be verified here. Discovery retries every 30 seconds after errors and refreshes every five minutes after success; run on a network where public Polymarket endpoints are reachable. No proxy or alternate data provider is silently substituted.
-
-Local integration tests verify token-correct updates, no duplicate subscription, reconnection, resubscription, and unsubscribe using an isolated WebSocket test server. Fixtures are used only in tests and are never served by the app.
-
-## Structure
-
-- `app/`: Next layout and terminal UI
-- `components/`: MapLibre atlas and historical chart
-- `lib/`: shared types, country rules, normalization, event parsing
-- `server/`: discovery, market store, WebSocket manager, HTTP/SSE endpoints
-- `tests/`: data-integrity and local WebSocket integration tests
-
-Country geometry is simplified from datasets/geo-countries, based on Natural Earth public-domain data. The map is a visualization, not a statement on sovereignty or disputed borders.
-
-## GitHub Pages + persistent live backend
-
-The repository includes `.github/workflows/pages.yml` and `Dockerfile.backend`. Publication still requires repository access and a separately hosted persistent backend; no deployment has been performed.
-
-1. Run the backend container on a persistent Node/container host with HTTPS. Set `ALLOWED_ORIGINS=https://YOUR-USERNAME.github.io` (origin only, without repository path). The container listens on port 4001; a platform can override `PORT`. Do not put private credentials into public build variables.
-2. Set the repository Actions variable `DATA_SERVICE_URL` to the backend's HTTPS base URL, without `/api/earth`. The backend exposes `/stream`, `/snapshot`, `/history`, and `/health`.
-3. Enable GitHub Pages with GitHub Actions as the publishing source. Push to `main` or run the publication workflow. It tests the app, verifies the backend is delivering live prices, builds the static frontend, and deploys `out/`.
-4. The workflow configures the repository base path from Pages metadata, so map geometry and navigation work under `username.github.io/repository/`.
-
-For a local static export check:
-
-```sh
-GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/probability-earth NEXT_PUBLIC_DATA_SERVICE_URL=https://YOUR-BACKEND.example npm run build
-```
-
-The placeholder URL above demonstrates build configuration only; it is not a working data source. Local development continues using the same-origin Next proxy. Public deployments must use the real HTTPS backend; GitHub Pages cannot run the Node service. The workflow refuses publication when that backend is missing or not live.
+`app/` frontend and API routes; `components/` map and chart; `lib/` normalization, types, country rules; `server/` discovery/store/upstream management; `tests/` normalization, pagination, and WebSocket recovery. Fixtures exist only in tests.

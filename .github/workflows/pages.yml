@@ -33,13 +33,14 @@ jobs:
           node --input-type=module - <<'JS'
           const url = process.env.NEXT_PUBLIC_DATA_SERVICE_URL;
           if (!url || new URL(url).protocol !== 'https:') throw new Error('Set the DATA_SERVICE_URL repository variable to the deployed HTTPS backend URL.');
-          const response = await fetch(`${url.replace(/\/$/,'')}/snapshot`, {signal: AbortSignal.timeout(20000)});
+          const response = await fetch(`${url.replace(/\/$/,'')}/stream`, {signal: AbortSignal.timeout(120000)});
           if (!response.ok) throw new Error(`Backend returned ${response.status}`);
-          const data = await response.json();
-          if (data.status !== 'LIVE' || !data.markets?.some(m => m.outcomes?.some(o => o.price !== null))) throw new Error('Backend is not delivering live market prices. Deployment stopped.');
-          console.log(`Live backend verified: ${data.markets.length} markets.`);
+          const reader=response.body.getReader(),decoder=new TextDecoder();let buffer='',verified=false;
+          while(!verified){const part=await reader.read();if(part.done)break;buffer+=decoder.decode(part.value,{stream:true});const frames=buffer.split('\n\n');buffer=frames.pop();for(const frame of frames){if(!frame.startsWith('data: '))continue;const data=JSON.parse(frame.slice(6));if(data.status==='LIVE'&&data.markets?.some(m=>m.outcomes?.some(o=>o.price!==null))){console.log(`Live backend verified: ${data.markets.length} markets.`);verified=true;break}}}
+          await reader.cancel();
+          if(!verified)throw Error('Backend did not deliver live market prices. Deployment stopped.');
           JS
-      - run: npm run build
+      - run: npm run build:pages
       - uses: actions/upload-pages-artifact@v4
         with:
           path: out

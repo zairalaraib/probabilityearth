@@ -147,3 +147,4 @@ test("unified trade envelopes preserve supplied ISO timestamps", () => {
   assert.equal(p.at, "2026-11-12T00:00:00.000Z");
   assert.equal(p.source, "Trade");
 });
+test('does not include unrelated corporate resignations or sports contracts',()=>{assert.equal(normalizeEvent({...event,title:'Technology leadership',markets:[{...event.markets[0],question:'Will a corporate CEO resign?'}]}).length,0);assert.equal(normalizeEvent({...event,title:'US NBA election',markets:[{...event.markets[0],question:'Will the US NBA team win?'}]}).length,0)});

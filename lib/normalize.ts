@@ -65,9 +65,12 @@ export function normalizeEvent(
         return [];
       const context = `${event.title ?? ""} ${m.question} ${(event.tags ?? []).map((t: any) => t.label ?? "").join(" ")}`;
       const category =
-        classifyCategory(context) ?? classifyCategory(m.description ?? "");
+        classifyCategory(context);
       if (!category) return [];
       const countries = classifyCountries(`${event.title ?? ""} ${m.question}`);
+      const politicalTags = /politics|geopolitics|world affairs|elections|foreign policy|government/i.test((event.tags??[]).map((t:any)=>t.label??'').join(' '));
+      if (!countries.length && !politicalTags && !/\b(nato|united nations|european union)\b/i.test(context)) return [];
+      if (/\b(nba|nfl|mlb|nhl|fifa|premier league|champions league|tennis|super bowl|world cup)\b/i.test(context)) return [];
       let labels = arr(m.outcomes),
         tokens = arr(m.clobTokenIds),
         prices = arr(m.outcomePrices);
