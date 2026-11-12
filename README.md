@@ -53,7 +53,7 @@ These NEXT_PUBLIC values are public URL configuration, never credentials. GitHub
 - Browser-saved watchlist, real historical charts, one-second live-update batches
 - Distinct Gamma outcome, executed trade, and bid/ask midpoint source labels
 - Visible LIVE, RECONNECTING, STALE, discovery completeness, and errors
-- Midnight blue and white interface with sky blue, neon pink, and orange accents
+- Graphite and slate interface with clear white text, restrained blue data accents, and amber highlights
 
 Gamma discovery uses documented keyset cursors to scan all nonclosed events, excluding inactive events, deduplicates by market ID, and excludes closed/invalid markets. Outcome labels, IDs, and prices retain their positional relationship; multi-outcome and position-ID objects are supported. Missing prices remain unavailable. Rule-based classification uses event title, market question, and tags; explicit country names and listed political aliases define associations. Description-only matches, unassociated corporate leadership contracts, and obvious sports contracts are excluded. Rules are conservative, incomplete, and not a curated intelligence feed.
 

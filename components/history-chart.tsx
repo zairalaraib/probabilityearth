@@ -75,13 +75,13 @@ export default function HistoryChart({ token }: { token: string | undefined }) {
             >
               <defs>
                 <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stopColor="#ff69c5" stopOpacity={0.3} />
-                  <stop offset="1" stopColor="#ff69c5" stopOpacity={0} />
+                  <stop offset="0" stopColor="#91b3d6" stopOpacity={0.3} />
+                  <stop offset="1" stopColor="#91b3d6" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid
                 vertical={false}
-                stroke="#243036"
+                stroke="#344052"
                 strokeDasharray="3 5"
               />
               <XAxis
@@ -95,19 +95,19 @@ export default function HistoryChart({ token }: { token: string | undefined }) {
                 }
                 axisLine={false}
                 tickLine={false}
-                tick={{ fill: "#73848a", fontSize: 9 }}
+                tick={{ fill: "#9aabc1", fontSize: 9 }}
               />
               <YAxis
                 domain={[0, 100]}
                 tickFormatter={(v) => `${v}%`}
-                tick={{ fill: "#73848a", fontSize: 9 }}
+                tick={{ fill: "#9aabc1", fontSize: 9 }}
                 axisLine={false}
                 tickLine={false}
               />
               <Tooltip
                 contentStyle={{
-                  background: "#101d23",
-                  border: "1px solid #33464c",
+                  background: "#182333",
+                  border: "1px solid #4a607b",
                   fontSize: 11,
                 }}
                 labelFormatter={(v) => new Date(Number(v)).toUTCString()}
@@ -116,7 +116,7 @@ export default function HistoryChart({ token }: { token: string | undefined }) {
               <Area
                 type="stepAfter"
                 dataKey="p"
-                stroke="#ff7bcf"
+                stroke="#acc9e7"
                 strokeWidth={1.7}
                 fill="url(#area)"
                 isAnimationActive={false}

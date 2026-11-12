@@ -45,20 +45,20 @@ export default function WorldMap({
             {
               id: "background",
               type: "background",
-              paint: { "background-color": "#09162d" },
+              paint: { "background-color": "#101923" },
             },
             {
               id: "land",
               type: "fill",
               source: "countries",
-              paint: { "fill-color": "#1b3152", "fill-opacity": 0.95 },
+              paint: { "fill-color": "#253445", "fill-opacity": 0.95 },
             },
             {
               id: "borders",
               type: "line",
               source: "countries",
               paint: {
-                "line-color": "#3e5b83",
+                "line-color": "#42546a",
                 "line-width": 0.65,
                 "line-opacity": 0.7,
               },
@@ -68,7 +68,7 @@ export default function WorldMap({
               type: "line",
               source: "countries",
               filter: ["==", ["get", "ISO3166-1-Alpha-2"], ""],
-              paint: { "line-color": "#ff8ed1", "line-width": 1.7 },
+              paint: { "line-color": "#dbbc88", "line-width": 1.7 },
             },
           ],
         },
@@ -143,18 +143,18 @@ export default function WorldMap({
         iso,
         mode === "movements"
           ? n > 10
-            ? "#ffad61"
+            ? "#d8b177"
             : n > 3
-              ? "#e36bb0"
-              : "#654a7e"
+              ? "#a38b69"
+              : "#596171"
           : n > 20
-            ? "#65bfea"
+            ? "#7b9ab8"
             : n > 5
-              ? "#3475a7"
-              : "#254b77",
+              ? "#536e8b"
+              : "#364e68",
       );
-    colors.push("#1b3152");
-    m.setPaintProperty("land", "fill-color", counts.size ? colors : "#1b3152");
+    colors.push("#253445");
+    m.setPaintProperty("land", "fill-color", counts.size ? colors : "#253445");
     m.setFilter("selected", [
       "==",
       ["get", "ISO3166-1-Alpha-2"],

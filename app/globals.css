@@ -1843,50 +1843,30 @@ h1 > span {
 }
 .explorer-select{background:#122126;color:#b0ccc3;border:1px solid #304a45;border-radius:3px;font-size:9px;max-width:110px;padding:4px}
 
-/* Probability Earth: midnight blue, white, sky blue, neon pink and orange. */
-:root{--bg:#070e22;--panel:#0c1730;--line:#253858;--text:#f6f8ff;--muted:#91a7c9;--mint:#74d5ff;--cyan:#74d5ff;--red:#ff609a;--amber:#ffab62;--pink:#ff43b5;--orange:#ff963e}
-body{background:radial-gradient(ellipse at 85% 0%,#15366a66,transparent 48%),#070e22}
-.panel{background:#0b1630;border-color:#263b60}
-.brand-icon{color:#ff75c9;border-color:#874170;background:radial-gradient(circle at 30% 25%,#452047,#101b37);box-shadow:0 0 24px #ff43b51a}
-.brand span{color:#ff69c5}.eyebrow{color:#89d9ff}.eyebrow>span{background:#ff963e}
-.topnav button.active{color:white}.topnav button.active:after{background:#ff43b5;box-shadow:0 0 12px #ff43b54d}
-h1{color:#fff}h1>span{color:#90bded}.page-heading p{color:#a0b3d1}
-.summary-grid{background:#0d1a34;border-color:#293e61}.summary-card{position:relative;border-color:#293e61}
-.summary-card:before{content:"";position:absolute;height:2px;top:0;left:0;right:0;background:var(--card-accent)}
-.summary-card:nth-child(1){--card-accent:#74d5ff;background:linear-gradient(125deg,#123657,#0d1a34 85%)}
-.summary-card:nth-child(2){--card-accent:#ff6fc8;background:linear-gradient(125deg,#3c2047,#111c37 85%)}
-.summary-card:nth-child(3){--card-accent:#e9f5ff;background:linear-gradient(125deg,#213a5b,#0d1a34 85%)}
-.summary-card:nth-child(4){--card-accent:#ffae69;background:linear-gradient(125deg,#412d2b,#151d34 85%)}
-.summary-card .summary-value,.summary-card .summary-top svg{color:var(--card-accent)}.summary-top{color:#b0c2df}.summary-sub{color:#94a9c9}
-.category-filters button{color:#a9bfdc}.category-filters button.active{background:#203e60;border-color:#5083b0;color:#d8f3ff}
-.category-filters button:nth-child(2),.category-label.conflict{--category:#ff89c8;--category-bg:#3c2044;--category-border:#794567}
-.category-filters button:nth-child(3),.category-label.elections{--category:#83d9ff;--category-bg:#153654;--category-border:#3f7097}
-.category-filters button:nth-child(4),.category-label.diplomacy{--category:#e3f4ff;--category-bg:#263b58;--category-border:#526d8c}
-.category-filters button:nth-child(5),.category-label.policy{--category:#9fc5ff;--category-bg:#1b2c59;--category-border:#475d91}
-.category-filters button:nth-child(6),.category-label.sanctions{--category:#ffb57b;--category-bg:#402d2c;--category-border:#855b43}
-.category-filters button:nth-child(7),.category-label.trade{--category:#ffc28d;--category-bg:#3d3028;--category-border:#83613f}
-.category-filters button:nth-child(8),.category-label.leadership{--category:#ff9bd6;--category-bg:#382343;--category-border:#79517a}
-.category-filters button:nth-child(n+2){color:var(--category)}.category-filters button:nth-child(n+2).active,.category-label{color:var(--category);background:var(--category-bg);border-color:var(--category-border)}
-.intelligence>.panel-header{background:linear-gradient(90deg,#302044,#101d38)}.intelligence>.panel-header h2>svg{color:#ff78cb}
-.map-panel>.panel-header{background:linear-gradient(90deg,#153655,#101d38)}.map-panel>.panel-header h2>svg{color:#8bdcff}
-.country-panel>.panel-header{background:linear-gradient(90deg,#233652,#101d38)}.country-panel>.panel-header h2>svg{color:#f0f7ff}
-.event-panel>.panel-header{background:linear-gradient(90deg,#3d2c2a,#121e37 70%)}.event-panel>.panel-header h2>svg{color:#ffac6b}
-.sidebar-tabs button.active{color:#ff94d6;border-bottom-color:#ff43b5}.direction-filters button.active{background:#342346;color:#ffb2e2}
-.map-toolbar{background:#0e1e39}.map-mode-switch{background:#09162c;border-color:#2c456a}.map-mode-switch button.active{background:#244967;color:#d4f3ff}
-.country-stats{background:#10213e;border-color:#2b4264}.country-stats strong{color:#f0f6ff}.country-market{background:#0d1d37;border-color:#2a4061}
-.country-market.selected{border-color:#bb508f;background:linear-gradient(135deg,#2f2041,#10233d);box-shadow:inset 2px 0 #ff43b5}
-.country-market h4,.mover-title{color:#edf3ff}.outcome-line b{color:#f5f9ff}.probability-bar{background:#243a59}.probability-bar i{background:linear-gradient(90deg,#ff43b5,#ff9d52)}
-.positive{color:#86dcff}.negative{color:#ff86b9}.mover:hover,.mover.chosen{background:#142746}.mover.chosen{box-shadow:inset 2px 0 #ff43b5}
-.intelligence-note{background:linear-gradient(120deg,#252344,#122640);border-color:#49426c}.intelligence-note>div{color:#ff9bd8}.intelligence-note p{color:#a7bad8}
-.connection.live{color:#9ee5ff}.connection.live i{background:#74d5ff;box-shadow:0 0 10px #74d5ff66}.connection{color:#ffb57b}.connection i{background:#ff963e}
-.search-box,.country-filter,.country-filter select{background:#0b1932;color:#b6c9e5;border-color:#2c4263}.search-box input::placeholder{color:#91a7c7}
-.chart-heading button.selected{background:#3c2349;color:#ffa6df}.chart-empty>span{color:#9bb1d1}
-.map-controls{background:#0c1a32eb;border-color:#3b577c}.map-controls button{color:#b7ddff}.map-legend{background:#0b1932eb;border-color:#385378;color:#bdd3ed}
-.legend-scale i:nth-child(1){background:#254b77}.legend-scale i:nth-child(2){background:#3475a7}.legend-scale i:nth-child(3){background:#65bfea}.legend-scale i:nth-child(4){background:#a4e0ff}.legend-scale i:nth-child(5){background:#edf8ff}
-.mode-movements .legend-scale i:nth-child(1){background:#654a7e}.mode-movements .legend-scale i:nth-child(2){background:#a45894}.mode-movements .legend-scale i:nth-child(3){background:#e36bb0}.mode-movements .legend-scale i:nth-child(4){background:#ff8279}.mode-movements .legend-scale i:nth-child(5){background:#ffad61}
-.marker-core{background:#ff6dc6;border-color:#ffd9f1;box-shadow:0 0 0 5px #ff43b51a,0 0 17px #ff43b55c}.map-marker.active .marker-core{background:#ffad61;box-shadow:0 0 0 6px #ff963e22,0 0 20px #ff963e77}
-.marker-label{background:#0c1b35ed;border-color:#88547c;color:#e5edff}.marker-label b{color:#ffaadf}
-.feed-labels{background:#0d1c35;color:#9ab4d8}.feed-prices b{color:#fff}.feed-status{color:#9ddfff}.radar-icon{color:#ffb172;background:#34272b;border-color:#785340}
-.info-modal{background:#101f3b;border-color:#4d668c}.info-modal p{color:#bacce7}.error-banner{background:#36242699;border-color:#795138;color:#ffc08e}
-
-.country-market{content-visibility:auto;contain-intrinsic-size:auto 180px}
+/* Graphite terminal: neutral surfaces, legible data, restrained signal colors. */
+:root{--bg:#0b0d10;--panel:#11151a;--line:#2a3038;--text:#edf0f4;--muted:#929da9;--mint:#9bbbe3;--cyan:#9bbbe3;--red:#e18d89;--amber:#d8b177}
+body{background:#0b0d10;color:var(--text)}
+.brand-icon{color:#c8d4e3;border-color:#46505f;background:#1b222b;box-shadow:none}.brand span{color:#aabbd0}.brand sup{color:#788594}
+.eyebrow{color:#9caec2}.eyebrow>span{background:#b9c8da}.topnav button.active{color:#fff}.topnav button.active:after{background:#aec8e8;box-shadow:none}
+h1{color:#f5f7fa}h1>span{color:#9aa7b6}.page-heading p{color:#929eac}.heading-aside>div{color:#a6b4c3}.heading-aside small{color:#778391}
+.panel{background:#11151a;border-color:#2a3038}.panel-header{background:#171c23;border-color:#2b323c}.panel-header h2>svg{color:#a3b6ca}
+.summary-grid{background:#13181e;border-color:#303844;border-radius:5px}.summary-card{background:#14191f;border-color:#303844}.summary-card:nth-child(even){background:#161c23}.summary-top{color:#a4afbc}.summary-top svg{color:#7e93ab}.summary-value{color:#f0f3f7}.summary-value>span{color:#98a8b8}.summary-sub{color:#8895a5}.summary-card:last-child .summary-value{color:#ddba87}
+.category-filters button{color:#9da9b8}.category-filters button:hover{background:#1c242e;color:#e6edf6}.category-filters button.active{color:#e1ecfa;background:#233245;border-color:#495e79}
+.category-label{color:#a1b7d1;border-color:#3c4b5e;background:#1b2633}.category-label.conflict{color:#d1a39a;border-color:#594540;background:#282020}.category-label.elections{color:#b2acd0;border-color:#47445b;background:#23222d}.category-label.diplomacy{color:#9fbdd0;border-color:#3c5060;background:#1c262d}.category-label.policy{color:#a6bdb3;border-color:#40564d;background:#1e2925}.category-label.sanctions,.category-label.trade{color:#c9b48e;border-color:#584c38;background:#29251e}.category-label.leadership{color:#b2b9c6;border-color:#49515f;background:#222832}
+.sidebar-tabs{border-color:#2a323d}.sidebar-tabs button{color:#8e9dad}.sidebar-tabs button.active{color:#cadbf0;border-bottom-color:#9bbbe3}.list-heading>span{color:#8997a7}.period-toggle{border-color:#354150}.period-toggle button.active{background:#29394b;color:#dce8f7}.direction-filters button{color:#8a9bad}.direction-filters button.active{background:#273342;color:#d4e1f1}
+.map-toolbar{background:#141b23;border-color:#2b3542}.map-mode-switch{background:#10151c;border-color:#354251}.map-mode-switch button{color:#91a2b5}.map-mode-switch button.active{background:#2a394b;color:#e0ebf7;box-shadow:none}.explorer-select{background:#1b2735;color:#d1deed;border-color:#45576d}
+.map-caption{color:#99adc4}.map-status{color:#9aafc4}.map-controls{background:#151d27ed;border-color:#445369}.map-controls button{color:#c4d2e4}.map-legend{background:#141d28ed;border-color:#3d4f65;color:#b6c6d9}.map-coordinate{color:#8d9eb1}.map-bottom{color:#97a8ba;border-color:#2b3542}.map-attribution{color:#8496ac}
+.legend-scale i:nth-child(1){background:#304359}.legend-scale i:nth-child(2){background:#46617d}.legend-scale i:nth-child(3){background:#6182a2}.legend-scale i:nth-child(4){background:#8eabc5}.legend-scale i:nth-child(5){background:#c2d7e8}
+.mode-movements .legend-scale i:nth-child(1){background:#424956}.mode-movements .legend-scale i:nth-child(2){background:#726b60}.mode-movements .legend-scale i:nth-child(3){background:#a38b69}.mode-movements .legend-scale i:nth-child(4){background:#cba777}.mode-movements .legend-scale i:nth-child(5){background:#e2c195}
+.marker-core{background:#bdd3ed;border-color:#ecf4ff;box-shadow:0 0 0 5px #acc7e516,0 0 13px #acc7e52c}.map-marker.active .marker-core{background:#dfba81;border-color:#ffe2b6;box-shadow:0 0 0 5px #d8b17722,0 0 14px #d8b17744}.marker-label{background:#141d29ed;border-color:#52667f;color:#d5e2f2}.marker-label b{color:#e8f2ff}
+.country-heading .eyebrow{color:#9aabbf}.country-heading h3{color:#f0f3f8}.country-heading small{color:#8f9fb3}.country-stats{background:#19212b;border-color:#344254}.country-stats>div{border-color:#344254}.country-stats span{color:#93a5bb}.country-stats strong{color:#e6eef8}.section-label{color:#a0aec0}.section-label>span{color:#8a9db6}
+.country-market{background:#151e29;border-color:#354357;content-visibility:auto;contain-intrinsic-size:auto 180px}.country-market.selected{border-color:#6f8cab;background:#1c2b3c;box-shadow:inset 2px 0 #9fbddc}.country-market h4,.mover-title{color:#e0e7f0}.outcome-line>span:first-child{color:#a8bbd1}.outcome-line b{color:#f0f6ff}.probability-bar{background:#344459}.probability-bar i{background:#91b3d6}.market-details{color:#9caec5}.market-extra{color:#9aafc9;border-color:#3e526b}
+.mover{border-color:#283240}.mover:hover,.mover.chosen{background:#1c2a3a}.mover-bottom strong{color:#ebf1fa}.mover-meta>span{color:#a7b6c9}.positive{color:#9cc6b6}.negative{color:#d99b98}
+.intelligence-note{background:#18212b;border-color:#364556}.intelligence-note>div{color:#bacbde}.intelligence-note p{color:#94a7bd}.intelligence-note button{color:#c0d1e6}.sidebar-source{border-color:#2a3543}
+.connection{color:#d7b987}.connection i{background:#d7b987;box-shadow:none}.connection.live{color:#a1c9b8}.connection.live i{background:#a1c9b8;box-shadow:none}.tiny-dot{background:#9fb9d7}
+.search-box,.country-filter,.country-filter select{background:#141c26;color:#bbcadc;border-color:#354356}.search-box input::placeholder{color:#8c9eb5}.search-box kbd{border-color:#43526a;color:#a0afc2}
+.history{border-color:#334054}.chart-heading{color:#a3b4ca}.chart-heading button.selected{background:#30455f;color:#e5eef9}.chart-empty{color:#8299b5}.chart-empty>span{color:#a5b7ce}.chart-empty small{color:#8095b0}
+.feed-labels{background:#18212c;color:#91a5bf}.feed-row{border-color:#2b384a}.feed-row time{color:#a0b3cd}.feed-title{color:#d6e1ef}.feed-prices{color:#a3b5cd}.feed-prices b{color:#eaf2ff}.feed-status{color:#a4c8b8}.radar-icon{color:#b9cde7;background:#223148;border-color:#4d6380}.feed-empty{color:#bccce0}.feed-empty small{color:#8fa4c0}.signal-bars i{background:#91a8c3}
+.info-modal{background:#16202e;border-color:#536781}.info-modal p{color:#b5c5d9}.error-banner{background:#2a261f;border-color:#5f5039;color:#d5bd93}.error-banner>span:last-child{color:#b6a387}
+.footer{color:#8697ad}.footer>span{color:#97a8bf}.footer button{color:#bacbdd}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 5px #acc7e516,0 0 13px #acc7e52c}50%{box-shadow:0 0 0 11px #acc7e500,0 0 20px #acc7e550}}
