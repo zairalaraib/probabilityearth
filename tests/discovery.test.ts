@@ -1,0 +1,6 @@
+import {test,mock} from 'node:test';
+import assert from 'node:assert/strict';
+import {discover} from '../server/discovery';
+const fixture=(id:number)=>({id:String(id),title:'Ukraine ceasefire',markets:[{id:`market-${id}`,question:'Ukraine ceasefire?',active:true,outcomes:['Yes','No'],outcomePrices:['.3','.7'],clobTokenIds:[`yes-${id}`,`no-${id}`]}]});
+test('discovery processes later pages instead of stopping after the first hundred events',async()=>{const urls:string[]=[];const replacement=mock.method(globalThis,'fetch',async(input:unknown)=>{const url=String(input);urls.push(url);return Response.json(url.includes('offset=100')?[fixture(100)]:Array.from({length:100},(_,i)=>fixture(i)))});try{const result=await discover();assert.equal(result.pages,2);assert.equal(result.markets.length,101);assert.ok(urls[1].includes('offset=100'));assert.ok(urls[0].includes('active=true&closed=false'))}finally{replacement.mock.restore()}});
+test('repeated API pages raise an incomplete-discovery error instead of looping forever',async()=>{const replacement=mock.method(globalThis,'fetch',async()=>Response.json(Array.from({length:100},(_,i)=>fixture(i))));try{await assert.rejects(discover(),/pagination repeated/)}finally{replacement.mock.restore()}});

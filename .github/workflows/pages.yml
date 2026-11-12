@@ -1,0 +1,57 @@
+name: Publish Probability Earth
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_DATA_SERVICE_URL: ${{ vars.DATA_SERVICE_URL }}
+      GITHUB_PAGES: 'true'
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/configure-pages@v5
+        id: pages
+      - name: Configure repository subpath
+        env:
+          SITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+        run: echo "NEXT_PUBLIC_BASE_PATH=$SITE_BASE_PATH" >> "$GITHUB_ENV"
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - name: Require a reachable live market backend
+        run: |
+          node --input-type=module - <<'JS'
+          const url = process.env.NEXT_PUBLIC_DATA_SERVICE_URL;
+          if (!url || new URL(url).protocol !== 'https:') throw new Error('Set the DATA_SERVICE_URL repository variable to the deployed HTTPS backend URL.');
+          const response = await fetch(`${url.replace(/\/$/,'')}/snapshot`, {signal: AbortSignal.timeout(20000)});
+          if (!response.ok) throw new Error(`Backend returned ${response.status}`);
+          const data = await response.json();
+          if (data.status !== 'LIVE' || !data.markets?.some(m => m.outcomes?.some(o => o.price !== null))) throw new Error('Backend is not delivering live market prices. Deployment stopped.');
+          console.log(`Live backend verified: ${data.markets.length} markets.`);
+          JS
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: out
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
