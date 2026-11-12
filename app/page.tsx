@@ -632,7 +632,7 @@ export default function Home() {
             <span>{selectedMarkets.length.toString().padStart(2, "0")}</span>
           </div>
           <div className="country-markets">
-            {selectedMarkets.map((m) => (
+            {(country ? selectedMarkets : selectedMarkets.slice(0, 20)).map((m) => (
               <div
                 className={`country-market ${selectedMarket?.id === m.id ? "selected" : ""}`}
                 key={m.id}

@@ -1888,3 +1888,5 @@ h1{color:#fff}h1>span{color:#90bded}.page-heading p{color:#a0b3d1}
 .marker-label{background:#0c1b35ed;border-color:#88547c;color:#e5edff}.marker-label b{color:#ffaadf}
 .feed-labels{background:#0d1c35;color:#9ab4d8}.feed-prices b{color:#fff}.feed-status{color:#9ddfff}.radar-icon{color:#ffb172;background:#34272b;border-color:#785340}
 .info-modal{background:#101f3b;border-color:#4d668c}.info-modal p{color:#bacce7}.error-banner{background:#36242699;border-color:#795138;color:#ffc08e}
+
+.country-market{content-visibility:auto;contain-intrinsic-size:auto 180px}
