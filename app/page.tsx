@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
+import {mergeSnapshot} from "@/lib/snapshot";
 import {dataUrl, basePath} from "@/lib/urls";
 import {
   Globe2,
@@ -123,7 +124,7 @@ export default function Home() {
     const source = new EventSource(dataUrl("stream"));
     source.onmessage = (e) => {
       try {
-        setSnapshot(JSON.parse(e.data));
+        setSnapshot(previous=>mergeSnapshot(previous,JSON.parse(e.data)));
         setTransportError(false);
       } catch {}
     };

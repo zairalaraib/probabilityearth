@@ -81,7 +81,7 @@ test("midpoint uses best bid and ask and rejects crossed prices", () => {
         { asset_id: "y", price: ".9", best_bid: ".2", best_ask: ".4" },
       ],
     })[0].price,
-    0.30000000000000004,
+    0.3,
   );
   assert.deepEqual(
     parsePriceEvent({
@@ -148,3 +148,7 @@ test("unified trade envelopes preserve supplied ISO timestamps", () => {
   assert.equal(p.source, "Trade");
 });
 test('does not include unrelated corporate resignations or sports contracts',()=>{assert.equal(normalizeEvent({...event,title:'Technology leadership',markets:[{...event.markets[0],question:'Will a corporate CEO resign?'}]}).length,0);assert.equal(normalizeEvent({...event,title:'US NBA election',markets:[{...event.markets[0],question:'Will the US NBA team win?'}]}).length,0)});
+
+test('midpoint precision does not create false price movements',()=>{assert.equal(parsePriceEvent({event_type:'best_bid_ask',asset_id:'y',best_bid:'.14',best_ask:'.15'})[0].price,.145)});
+
+test('cold-session discovery retains last-known markets until a complete replacement arrives',async()=>{const {mergeSnapshot}=await import('../lib/snapshot');const store=new MarketStore();store.replace(normalizeEvent(event));const previous=store.snapshot();const incoming={...previous,markets:[],feed:[],status:'CONNECTING' as const,discoveryComplete:false};assert.equal(mergeSnapshot(previous,incoming).markets.length,1);assert.equal(mergeSnapshot(previous,{...incoming,discoveryComplete:true}).markets.length,0)});

@@ -150,7 +150,7 @@ export function parsePriceEvent(event: Record<string, any>): PriceUpdate[] {
         ? [
             {
               tokenId: String(tokenId),
-              price: (bid + ask) / 2,
+              price: Number(((bid + ask) / 2).toFixed(8)),
               source: "Midpoint" as const,
               at,
             },
